@@ -1,0 +1,72 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>528e1a5f-1026-460b-a024-6947046410ef</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>Sorting_.py</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <Name>Sorting</Name>
+    <RootNamespace>Sorting</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="colorama-0.3.9\colorama\ansi.py" />
+    <Compile Include="colorama-0.3.9\colorama\ansitowin32.py" />
+    <Compile Include="colorama-0.3.9\colorama\initialise.py" />
+    <Compile Include="colorama-0.3.9\colorama\win32.py" />
+    <Compile Include="colorama-0.3.9\colorama\winterm.py" />
+    <Compile Include="colorama-0.3.9\colorama\__init__.py" />
+    <Compile Include="colorama-0.3.9\demos\demo01.py" />
+    <Compile Include="colorama-0.3.9\demos\demo02.py" />
+    <Compile Include="colorama-0.3.9\demos\demo03.py" />
+    <Compile Include="colorama-0.3.9\demos\demo04.py" />
+    <Compile Include="colorama-0.3.9\demos\demo05.py" />
+    <Compile Include="colorama-0.3.9\demos\demo06.py" />
+    <Compile Include="colorama-0.3.9\demos\demo07.py" />
+    <Compile Include="colorama-0.3.9\demos\demo08.py" />
+    <Compile Include="colorama-0.3.9\demos\fixpath.py" />
+    <Compile Include="colorama-0.3.9\setup.py" />
+    <Compile Include="Sorting_.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="colorama-0.3.9\" />
+    <Folder Include="colorama-0.3.9\colorama.egg-info\" />
+    <Folder Include="colorama-0.3.9\colorama\" />
+    <Folder Include="colorama-0.3.9\demos\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="colorama-0.3.9\CHANGELOG.rst" />
+    <Content Include="colorama-0.3.9\colorama.egg-info\dependency_links.txt" />
+    <Content Include="colorama-0.3.9\colorama.egg-info\pbr.json" />
+    <Content Include="colorama-0.3.9\colorama.egg-info\PKG-INFO" />
+    <Content Include="colorama-0.3.9\colorama.egg-info\SOURCES.txt" />
+    <Content Include="colorama-0.3.9\colorama.egg-info\top_level.txt" />
+    <Content Include="colorama-0.3.9\demos\demo.bat" />
+    <Content Include="colorama-0.3.9\demos\demo.sh" />
+    <Content Include="colorama-0.3.9\LICENSE.txt" />
+    <Content Include="colorama-0.3.9\MANIFEST.in" />
+    <Content Include="colorama-0.3.9\PKG-INFO" />
+    <Content Include="colorama-0.3.9\README.rst" />
+    <Content Include="colorama-0.3.9\setup.cfg" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+  <!-- Uncomment the CoreCompile target to enable the Build command in
+       Visual Studio and specify your pre- and post-build commands in
+       the BeforeBuild and AfterBuild targets below. -->
+  <!--<Target Name="CoreCompile" />-->
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+</Project>

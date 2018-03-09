@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Sorting", "Sorting\Sorting.pyproj", "{528E1A5F-1026-460B-A024-6947046410EF}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Sorting_backup", "Sorting_backup\Sorting_backup.pyproj", "{82526F56-BC5D-40B5-B094-E318C009CD1B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{528E1A5F-1026-460B-A024-6947046410EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{528E1A5F-1026-460B-A024-6947046410EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82526F56-BC5D-40B5-B094-E318C009CD1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82526F56-BC5D-40B5-B094-E318C009CD1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ED8016D5-FF33-462A-B781-094F006D4ED7}
+	EndGlobalSection
+EndGlobal
