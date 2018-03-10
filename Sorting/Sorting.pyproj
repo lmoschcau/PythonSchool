@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>528e1a5f-1026-460b-a024-6947046410ef</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Sorting_.py</StartupFile>
+    <StartupFile>Sorting.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -37,7 +37,7 @@
     <Compile Include="colorama-0.3.9\demos\demo08.py" />
     <Compile Include="colorama-0.3.9\demos\fixpath.py" />
     <Compile Include="colorama-0.3.9\setup.py" />
-    <Compile Include="Sorting_.py" />
+    <Compile Include="Sorting.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="colorama-0.3.9\" />

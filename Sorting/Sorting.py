@@ -8,6 +8,8 @@ import datetime
 import colorama
 colorama.init()
 
+AnzahlAufrufe = 0
+AnzahlAbfragen = 0
 
 cMax = 1000
 def vertausche(Feld, i, j):
@@ -15,41 +17,57 @@ def vertausche(Feld, i, j):
     return Feld
 
 def AuswahlSort(Feld):
+    global AnzahlAufrufe
+    global AnzahlAbfragen
     for grenze in range(len(Feld)):
         kleinstes = grenze;
         for i in range(grenze, len(Feld)):
+            AnzahlAufrufe += 1                                  #Zähler
             if Feld[i] < Feld[kleinstes]:
                 kleinstes = i
+                AnzahlAbfragen += 1                                 #Zähler
         Feld = vertausche(Feld, grenze, kleinstes)
     return Feld
 
 def EinSort(Feld):
     def FuegeEin(Feld, i):
+        global AnzahlAufrufe
+        global AnzahlAbfragen
         Inhalt = Feld[i]
         while ((i > 0) & (Feld[i - 1] > Inhalt)):
             Feld[i] = Feld[i - 1]
             i -= 1
+            AnzahlAbfragen += 1                                     #Zähler
         Feld[i] = Inhalt
+        AnzahlAufrufe += 1                                      #Zähler
         return Feld
     for grenze in range(1, len(Feld) - 1):
         Feld = FuegeEin(Feld, grenze)
     return Feld
 
 def BubbleSort(Feld):
+    global AnzahlAufrufe
+    global AnzahlAbfragen
     for grenze in range(len(Feld) - 1):
         for i in range(len(Feld) - 1, grenze, -1):
+            AnzahlAufrufe += 1                                  #Zähler
             if (Feld[i - 1] > Feld[i]):
                 vertausche(Feld, i, i - 1)
+                AnzahlAbfragen += 1                                 #Zähler
     return Feld
 
 def BubbleSort2(Feld):
+    global AnzahlAufrufe
+    global AnzahlAbfragen
     grenze = 0
     while (grenze < len(Feld)):
         merke = len(Feld)
         for i in range(len(Feld) - 1, grenze, -1):
+            AnzahlAufrufe += 1                                  #Zähler
             if (Feld[i - 1] > Feld[i]):
                 vertausche(Feld, i, i - 1)
                 merke = i
+                AnzahlAbfragen += 1                                 #Zähler
         grenze = merke
     return Feld
 
@@ -76,28 +94,46 @@ def Eingabe(Nachricht, Fehlermeldung):
 
 Fehler = "Bitte Geben Sie eine ganze natürliche Zahl an."
 
-UserFeld = None
+EingabeFeld = None
 
 ArrayLaenge = Eingabe("Bitte die Länge des Feldes angeben:", Fehler)
-while (UserFeld == None):
-    ZufallMin = Eingabe("Bitte den niedrigsten Wert angebe:", Fehler)
+while (EingabeFeld == None):
+    ZufallMin = Eingabe("Bitte den niedrigsten Wert angeben:", Fehler)
     ZufallMax = Eingabe("Bitte den höchsten Wert angeben:", Fehler)
     try:
-        UserFeld = FuelleZufall(ArrayLaenge, ZufallMin, ZufallMax)
+        EingabeFeld = FuelleZufall(ArrayLaenge, ZufallMin, ZufallMax)
     except ValueError:
         print("\033[2J\033[1;1f" + colorama.Fore.RED + "Fehler: niedrigster Wert (" + str(ZufallMin) + ") ist größer höchster Wert (" + str(ZufallMax) + ")" + colorama.Style.RESET_ALL)
 
-Zeiten = []
-Aufrufe = []
+Zeiten = [None] * 4
+Aufrufe = [None] * 4
+Abfragen = [None] * 4
 
-def RufeAuf(Algorithmus, i):
+def RufeAuf(Algorithmus, AufrufFeld, i):
+    print("Hello")
+    global AnzahlAufrufe
+    global AnzahlAbfragen
+    AnzahlAufrufe = 0
+    AnzahlAbfragen = 0
     StartZeit = datetime.datetime.now()
-    Algorithmus(UserFeld)
+    print(Algorithmus(AufrufFeld))
     Zeiten[i] = datetime.datetime.now() - StartZeit
+    Aufrufe[i] = AnzahlAufrufe
+    Abfragen[i] = AnzahlAbfragen
 
-print (UserFeld)
-print (AuswahlSort(UserFeld))
-print (EinSort(UserFeld))
-print (BubbleSort(UserFeld))
-print (BubbleSort2(UserFeld))
+    print("AnzahlAufrufe: " + str(AnzahlAufrufe) + " AnzahlAbfragen: " + str(AnzahlAbfragen) + " Zeit: " + str(Zeiten[i]))
+
+    
+print (colorama.Fore.BLUE + str(EingabeFeld) + colorama.Style.RESET_ALL)
+
+RufeAuf(AuswahlSort, list(EingabeFeld), 0)
+print (colorama.Fore.BLUE + str(EingabeFeld) + colorama.Style.RESET_ALL)
+RufeAuf(EinSort, list(EingabeFeld), 1)
+print (colorama.Fore.BLUE + str(EingabeFeld) + colorama.Style.RESET_ALL)
+RufeAuf(BubbleSort, list(EingabeFeld), 2)
+print (colorama.Fore.BLUE + str(EingabeFeld) + colorama.Style.RESET_ALL)
+RufeAuf(BubbleSort2, list(EingabeFeld), 3)
+print (colorama.Fore.BLUE + str(EingabeFeld) + colorama.Style.RESET_ALL)
+result = AuswahlSort( list(EingabeFeld))
+print (colorama.Fore.BLUE + str(EingabeFeld) + colorama.Style.RESET_ALL)
         
