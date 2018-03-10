@@ -11,6 +11,8 @@ colorama.init()
 AnzahlAufrufe = 0
 AnzahlAbfragen = 0
 
+SpaltenBreite = 12
+
 cMax = 1000
 def vertausche(Feld, i, j):
     Feld[i], Feld[j] = Feld[j], Feld [i]
@@ -108,6 +110,7 @@ while (EingabeFeld == None):
 Zeiten = [None] * 4
 Aufrufe = [None] * 4
 Abfragen = [None] * 4
+Funktionen = [None] * 4
 
 def RufeAuf(Algorithmus, AufrufFeld, i):
     global AnzahlAufrufe
@@ -119,6 +122,7 @@ def RufeAuf(Algorithmus, AufrufFeld, i):
     Zeiten[i] = datetime.datetime.now() - StartZeit
     Aufrufe[i] = AnzahlAufrufe
     Abfragen[i] = AnzahlAbfragen
+    Funktionen[i] = Algorithmus.__name__
     print(sortiertesFeld)
     print("AnzahlAufrufe: " + str(AnzahlAufrufe) + " AnzahlAbfragen: " + str(AnzahlAbfragen) + " Zeit: " + str(Zeiten[i]))
 
@@ -127,9 +131,8 @@ def RufeAuf(Algorithmus, AufrufFeld, i):
     
 print (colorama.Fore.BLUE + str(EingabeFeld) + colorama.Style.RESET_ALL)
 
-RufeAuf(AuswahlSort, list(EingabeFeld), 0)
-RufeAuf(EinSort, list(EingabeFeld), 1)
-RufeAuf(BubbleSort, list(EingabeFeld), 2)
-RufeAuf(BubbleSort2, list(EingabeFeld), 3)
-result = AuswahlSort( list(EingabeFeld))
-        
+if all(x == RufeAuf(AuswahlSort, list(EingabeFeld), 0) for x in (RufeAuf(AuswahlSort, list(EingabeFeld), 0), RufeAuf(EinSort, list(EingabeFeld), 1), RufeAuf(BubbleSort, list(EingabeFeld), 2), RufeAuf(BubbleSort2, list(EingabeFeld), 3))):
+    print("Alle Felder sind gleich!!!")
+
+for i in range(len(Funktionen)):
+    print(Funktionen[i])
