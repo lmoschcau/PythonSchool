@@ -41,7 +41,7 @@ def EinSort(Feld):
         Feld[i] = Inhalt
         AnzahlAufrufe += 1                                      #Zähler
         return Feld
-    for grenze in range(1, len(Feld) - 1):
+    for grenze in range(1, len(Feld)):
         Feld = FuegeEin(Feld, grenze)
     return Feld
 
@@ -109,6 +109,16 @@ Zeiten = [None] * 4
 Aufrufe = [None] * 4
 Abfragen = [None] * 4
 
+def Visualisierung(Feld):
+    for i in range(max(Feld), min(Feld) - 1, -1):
+        horizontal = ' '
+        for j in range(len(Feld)):
+            if Feld[j] >= i:
+                horizontal += '#'
+            else:
+                horizontal += ' '
+        print horizontal
+
 def RufeAuf(Algorithmus, AufrufFeld, i):
     global AnzahlAufrufe
     global AnzahlAbfragen
@@ -119,7 +129,8 @@ def RufeAuf(Algorithmus, AufrufFeld, i):
     Zeiten[i] = datetime.datetime.now() - StartZeit
     Aufrufe[i] = AnzahlAufrufe
     Abfragen[i] = AnzahlAbfragen
-    print(sortiertesFeld)
+    print '\n'
+    Visualisierung(sortiertesFeld)
     print("AnzahlAufrufe: " + str(AnzahlAufrufe) + " AnzahlAbfragen: " + str(AnzahlAbfragen) + " Zeit: " + str(Zeiten[i]))
 
     return sortiertesFeld
@@ -127,9 +138,16 @@ def RufeAuf(Algorithmus, AufrufFeld, i):
     
 print (colorama.Fore.BLUE + str(EingabeFeld) + colorama.Style.RESET_ALL)
 
+print '\nunsortiertes Feld:\n'
+Visualisierung(list(EingabeFeld))
+
+print '\nsortiertes Feld (Auswahl):'
 RufeAuf(AuswahlSort, list(EingabeFeld), 0)
+print '\nsortiertes Feld (Einfügen):'
 RufeAuf(EinSort, list(EingabeFeld), 1)
+print '\nsortiertes Feld (Bubble-Sort):'
 RufeAuf(BubbleSort, list(EingabeFeld), 2)
+print '\nsortiertes Feld (Bubble+):'
 RufeAuf(BubbleSort2, list(EingabeFeld), 3)
 result = AuswahlSort( list(EingabeFeld))
         
