@@ -110,30 +110,26 @@ Aufrufe = [None] * 4
 Abfragen = [None] * 4
 
 def RufeAuf(Algorithmus, AufrufFeld, i):
-    print("Hello")
     global AnzahlAufrufe
     global AnzahlAbfragen
     AnzahlAufrufe = 0
     AnzahlAbfragen = 0
     StartZeit = datetime.datetime.now()
-    print(Algorithmus(AufrufFeld))
+    sortiertesFeld = Algorithmus(AufrufFeld)
     Zeiten[i] = datetime.datetime.now() - StartZeit
     Aufrufe[i] = AnzahlAufrufe
     Abfragen[i] = AnzahlAbfragen
-
+    print(sortiertesFeld)
     print("AnzahlAufrufe: " + str(AnzahlAufrufe) + " AnzahlAbfragen: " + str(AnzahlAbfragen) + " Zeit: " + str(Zeiten[i]))
+
+    return sortiertesFeld
 
     
 print (colorama.Fore.BLUE + str(EingabeFeld) + colorama.Style.RESET_ALL)
 
 RufeAuf(AuswahlSort, list(EingabeFeld), 0)
-print (colorama.Fore.BLUE + str(EingabeFeld) + colorama.Style.RESET_ALL)
 RufeAuf(EinSort, list(EingabeFeld), 1)
-print (colorama.Fore.BLUE + str(EingabeFeld) + colorama.Style.RESET_ALL)
 RufeAuf(BubbleSort, list(EingabeFeld), 2)
-print (colorama.Fore.BLUE + str(EingabeFeld) + colorama.Style.RESET_ALL)
 RufeAuf(BubbleSort2, list(EingabeFeld), 3)
-print (colorama.Fore.BLUE + str(EingabeFeld) + colorama.Style.RESET_ALL)
 result = AuswahlSort( list(EingabeFeld))
-print (colorama.Fore.BLUE + str(EingabeFeld) + colorama.Style.RESET_ALL)
         
