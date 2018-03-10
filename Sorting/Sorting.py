@@ -11,8 +11,6 @@ colorama.init()
 AnzahlAufrufe = 0
 AnzahlAbfragen = 0
 
-SpaltenBreite = 12
-
 cMax = 1000
 def vertausche(Feld, i, j):
     Feld[i], Feld[j] = Feld[j], Feld [i]
@@ -43,7 +41,7 @@ def EinSort(Feld):
         Feld[i] = Inhalt
         AnzahlAufrufe += 1                                      #Zähler
         return Feld
-    for grenze in range(1, len(Feld) - 1):
+    for grenze in range(1, len(Feld)):
         Feld = FuegeEin(Feld, grenze)
     return Feld
 
@@ -110,7 +108,16 @@ while (EingabeFeld == None):
 Zeiten = [None] * 4
 Aufrufe = [None] * 4
 Abfragen = [None] * 4
-Funktionen = [None] * 4
+
+def Visualisierung(Feld):
+    for i in range(max(Feld), min(Feld) - 1, -1):
+        horizontal = ' '
+        for j in range(len(Feld)):
+            if Feld[j] >= i:
+                horizontal += '#'
+            else:
+                horizontal += ' '
+        print horizontal
 
 def RufeAuf(Algorithmus, AufrufFeld, i):
     global AnzahlAufrufe
@@ -122,8 +129,8 @@ def RufeAuf(Algorithmus, AufrufFeld, i):
     Zeiten[i] = datetime.datetime.now() - StartZeit
     Aufrufe[i] = AnzahlAufrufe
     Abfragen[i] = AnzahlAbfragen
-    Funktionen[i] = Algorithmus.__name__
-    print(sortiertesFeld)
+    print '\n'
+    Visualisierung(sortiertesFeld)
     print("AnzahlAufrufe: " + str(AnzahlAufrufe) + " AnzahlAbfragen: " + str(AnzahlAbfragen) + " Zeit: " + str(Zeiten[i]))
 
     return sortiertesFeld
@@ -131,8 +138,16 @@ def RufeAuf(Algorithmus, AufrufFeld, i):
     
 print (colorama.Fore.BLUE + str(EingabeFeld) + colorama.Style.RESET_ALL)
 
-if all(x == RufeAuf(AuswahlSort, list(EingabeFeld), 0) for x in (RufeAuf(AuswahlSort, list(EingabeFeld), 0), RufeAuf(EinSort, list(EingabeFeld), 1), RufeAuf(BubbleSort, list(EingabeFeld), 2), RufeAuf(BubbleSort2, list(EingabeFeld), 3))):
-    print("Alle Felder sind gleich!!!")
+print '\nunsortiertes Feld:\n'
+Visualisierung(list(EingabeFeld))
 
-for i in range(len(Funktionen)):
-    print(Funktionen[i])
+print '\nsortiertes Feld (Auswahl):'
+RufeAuf(AuswahlSort, list(EingabeFeld), 0)
+print '\nsortiertes Feld (Einfügen):'
+RufeAuf(EinSort, list(EingabeFeld), 1)
+print '\nsortiertes Feld (Bubble-Sort):'
+RufeAuf(BubbleSort, list(EingabeFeld), 2)
+print '\nsortiertes Feld (Bubble+):'
+RufeAuf(BubbleSort2, list(EingabeFeld), 3)
+result = AuswahlSort( list(EingabeFeld))
+        
