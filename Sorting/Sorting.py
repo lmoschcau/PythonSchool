@@ -1,3 +1,5 @@
+# coding=utf-8
+
 import sys
 import random
 import datetime
@@ -9,9 +11,7 @@ colorama.init()
 
 cMax = 1000
 def vertausche(Feld, i, j):
-    hilf = Feld[i]
-    Feld[i] = Feld[j]
-    Feld[j] = hilf
+    Feld[i], Feld[j] = Feld[j], Feld [i]
     return Feld
 
 def AuswahlSort(Feld):
@@ -24,14 +24,15 @@ def AuswahlSort(Feld):
     return Feld
 
 def EinSort(Feld):
-    def FuegeEin(Inhalt, Feld, i):
-        while ((i > 0) & (Feld[i] > Inhalt)):
-            Feld[i + 1] = Inhalt
-            i-= 1
-        Feld[i + 1] = Inhalt
+    def FuegeEin(Feld, i):
+        Inhalt = Feld[i]
+        while ((i > 0) & (Feld[i - 1] > Inhalt)):
+            Feld[i] = Feld[i - 1]
+            i -= 1
+        Feld[i] = Inhalt
         return Feld
-    for grenze in range(1, len(Feld)):
-        Feld = FuegeEin(Feld[grenze], Feld, grenze - 1)
+    for grenze in range(1, len(Feld) - 1):
+        Feld = FuegeEin(Feld, grenze)
     return Feld
 
 def BubbleSort(Feld):
@@ -42,7 +43,7 @@ def BubbleSort(Feld):
     return Feld
 
 def BubbleSort2(Feld):
-    grenze = 1
+    grenze = 0
     while (grenze < len(Feld)):
         merke = len(Feld)
         for i in range(len(Feld) - 1, grenze, -1):
@@ -75,14 +76,14 @@ def Eingabe(Nachricht, Fehlermeldung):
 
 Fehler = "Bitte Geben Sie eine ganze natürliche Zahl an."
 
-Feld = None
+UserFeld = None
 
 ArrayLaenge = Eingabe("Bitte die Länge des Feldes angeben:", Fehler)
-while (Feld == None):
+while (UserFeld == None):
     ZufallMin = Eingabe("Bitte den niedrigsten Wert angebe:", Fehler)
     ZufallMax = Eingabe("Bitte den höchsten Wert angeben:", Fehler)
     try:
-        Feld = FuelleZufall(ArrayLaenge, ZufallMin, ZufallMax)
+        UserFeld = FuelleZufall(ArrayLaenge, ZufallMin, ZufallMax)
     except ValueError:
         print("\033[2J\033[1;1f" + colorama.Fore.RED + "Fehler: niedrigster Wert (" + str(ZufallMin) + ") ist größer höchster Wert (" + str(ZufallMax) + ")" + colorama.Style.RESET_ALL)
 
@@ -91,12 +92,12 @@ Aufrufe = []
 
 def RufeAuf(Algorithmus, i):
     StartZeit = datetime.datetime.now()
-    Algorithmus(Feld)
+    Algorithmus(UserFeld)
     Zeiten[i] = datetime.datetime.now() - StartZeit
 
-print (Feld)
-print (AuswahlSort(Feld))
-print (EinSort(Feld))
-print (BubbleSort(Feld))
-print (BubbleSort2(Feld))
+print (UserFeld)
+print (AuswahlSort(UserFeld))
+print (EinSort(UserFeld))
+print (BubbleSort(UserFeld))
+print (BubbleSort2(UserFeld))
         
