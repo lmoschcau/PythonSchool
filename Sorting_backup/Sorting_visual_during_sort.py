@@ -1,7 +1,11 @@
 # coding=utf-8
+# THIS VERSION IS VISUALIZING EVERY STEP.
+# ███ USE WITH CAUTION !!! ███ 
 import sys
 import random
 import datetime
+import time
+from time import sleep
 
 #if not using colorama comment out the next two lines
 import colorama
@@ -19,6 +23,9 @@ Schreiben = [None] * 4
 Funktionen = [None] * 4
 
 Beenden = False
+
+maximumFeld = 0
+maximumFaktor = 0.01
 # Sortier-Algorithmen:
 def vertausche( Feld, i, j ):
     Feld[i], Feld[j] = Feld[j], Feld[i]
@@ -34,6 +41,7 @@ def AuswahlSort( Feld ):
             if Feld[i] < Feld[kleinstes]:
                 kleinstes = i
                 AnzahlSchreiben += 1                                 #Zähler
+                Visualisierung(Feld, grenze, position = i)
         Feld = vertausche(Feld, grenze, kleinstes)
     return Feld
 
@@ -46,6 +54,7 @@ def EinSort( Feld ):
             Feld[i] = Feld[i - 1]
             i -= 1
             AnzahlAufrufe += 1                                     #Zähler
+            Visualisierung(Feld, grenze, position = i)
         Feld[i] = Inhalt
         AnzahlSchreiben += 1                                      #Zähler
         return Feld
@@ -62,6 +71,7 @@ def BubbleSort( Feld ):
             if ( Feld[i - 1] > Feld[i] ):
                 vertausche(Feld, i, i - 1)
                 AnzahlSchreiben += 1                                 #Zähler
+                Visualisierung(Feld, grenze, position = i)
     return Feld
 
 def BubbleSort2( Feld ):
@@ -76,6 +86,7 @@ def BubbleSort2( Feld ):
                 vertausche(Feld, i, i - 1)
                 merke = i
                 AnzahlSchreiben += 1                                 #Zähler
+                Visualisierung(Feld, grenze, position = i)
         grenze = merke
     return Feld
 
@@ -120,34 +131,68 @@ def InitialisierungFeld( ):
     Fehler = "Bitte Geben Sie eine ganze natürliche Zahl an."
     EingabeFeld = None
 
-    ArrayLaenge = Eingabe("Bitte die Länge des Feldes angeben:", int, Fehler)
     while ( EingabeFeld == None ):
-        ZufallMin = Eingabe("Bitte den niedrigsten Wert angeben:", int, Fehler)
-        ZufallMax = Eingabe("Bitte den höchsten Wert angeben:", int, Fehler)
-        try:
-            EingabeFeld = FuelleZufall(ArrayLaenge, ZufallMin, ZufallMax)
-        except ValueError:
-            print("\033[2J\033[1;1f" + colorama.Fore.RED + "Fehler: niedrigster Wert (" + str(ZufallMin) + ") ist größer höchster Wert (" + str(ZufallMax) + ")!" + colorama.Style.RESET_ALL)
+        ArrayLaenge = Eingabe("Bitte die Länge des Feldes angeben (kleiner als das für Schritt-für-Schritt Visualisierung errechnete Maximum " + str(maximumFeld) + ":", int, Fehler)
+        if (ArrayLaenge < maximumFeld):
+            ZufallMin = Eingabe("Bitte den niedrigsten Wert angeben:", int, Fehler)
+            ZufallMax = Eingabe("Bitte den höchsten Wert angeben:", int, Fehler)
+            try:
+                EingabeFeld = FuelleZufall(ArrayLaenge, ZufallMin, ZufallMax)
+            except ValueError:
+                print("\033[2J\033[1;1f" + colorama.Fore.RED + "Fehler: niedrigster Wert (" + str(ZufallMin) + ") ist größer als der höchste Wert (" + str(ZufallMax) + ")!" + colorama.Style.RESET_ALL)
+        else:
+            print("\033[2J\033[1;1f" + colorama.Fore.RED + "Fehler: Die Länge des Feldes (" + str(ArrayLaenge) + ") ist größer als das für Schritt-für-Schritt Visualisierung errechnete Maximum (" + str(maximumFeld) + ")!" + colorama.Style.RESET_ALL)
     return EingabeFeld
 #███ Funktionen für die Visualisierung von Feldern.
 # Wenn eine weitere Funktionen ergänzt wird muss sie bei der Eingabe der
 # visualisierung ergänzt werden.
-def VisualisierungVertikal( Feld ):
+def TesteGeschwindigkleit():
+    global maximumFeld
+    print( colorama.Fore.RED + "Teste Geschwindikeit des Computers. Bitte warten" + colorama.Style.RESET_ALL)
+    start = time.time()
+    for i in range(10000):
+        print( colorama.Fore.RED + ".", end="")
+    millis = int(round((time.time() - start) * 1000))
+    print("Der Computer hat " + str(millis) + "ms gebraucht.")
+    maximumFeld = int(maximumFaktor * millis) + 1
+    sleep(2)
+    print('\033[2J\033[1;1f', end='')
+
+def VisualisierungVertikal( Feld, Grenze, **kwargs ):
+    print('\033[2J\033[1;1f', end='')
     for i in range(max(Feld), min(Feld) - 1, -1):
         horizontal = ' '
         for j in range(len(Feld)):
             if Feld[j] >= i:
+                if (j < Grenze):
+                    horizontal += colorama.Fore.GREEN
+                else:
+                    horizontal += colorama.Fore.RED
                 horizontal += '█'
             else:
                 horizontal += ' '
-        print(horizontal)
+        print(horizontal, flush=True)
+    if (kwargs.get('position', None)):
+        print((" " * kwargs.get('position', None)) + colorama.Fore.WHITE + "^")
+    sleep(0.08) # Time in seconds.
 
-def VisualisierungHorizontal( Feld ):
+def VisualisierungHorizontal( Feld, Grenze, **kwargs ):
+    print('\033[2J\033[1;1f', end='')
     for i in range(len(Feld)):
-        horizontal = '■' * Feld[i]
-        print(horizontal)
+        if (kwargs.get('position', None) == i):
+            horizontal = colorama.Fore.WHITE + "›"
+        else:
+            horizontal = " "
+        if (i < Grenze):
+            horizontal += colorama.Fore.GREEN
+        else:
+            horizontal += colorama.Fore.RED
+        horizontal += '■' * Feld[i]
+        print(horizontal, flush=True)
+    sleep(0.08) # Time in seconds.
 
-def VisualisierungFeld( Feld ):
+def VisualisierungFeld( Feld, Grenze, **kwargs ):
+    print('\033[2J\033[1;1f', end='')
     print(colorama.Fore.BLUE + str(EingabeFeld) + colorama.Style.RESET_ALL)
     
 #███ Ausgabe
@@ -174,8 +219,8 @@ def RufeAuf( Algorithmus, AufrufFeld, i ):
     Aufrufe[i] = AnzahlAufrufe
     Schreiben[i] = AnzahlSchreiben
     Funktionen[i] = Algorithmus.__name__
+    Visualisierung( sortiertesFeld, len(sortiertesFeld) )
     print('\n')
-    Visualisierung(sortiertesFeld)
     print("AnzahlAufrufe: " + str(AnzahlAufrufe) + " AnzahlSchreiben: " + str(AnzahlSchreiben) + " Zeit: " + str(Zeiten[i]))
     # weitergabe des sortierten Feldes für Weiterverarbeitung / Informationen
     return sortiertesFeld
@@ -209,12 +254,13 @@ def Ueberpruefen( FeldFeld ):
     return FeldFehler
 
 #███ Aufruf ( Hauptprogramm ):
+TesteGeschwindigkleit();
 while (Beenden == False):
     print('\033[2J\033[1;1f', end='')
     EingabeFeld = InitialisierungFeld()
     Visualisierung = Auswahl({"v":VisualisierungVertikal, "h":VisualisierungHorizontal, "f":VisualisierungFeld}, "Visualisierung bitte auswählen: Vertikal[V] Horizontal[H] Feld[F]")
     print(colorama.Fore.BLUE + '\033[2J\033[1;1funsortiertes Feld:\n' + colorama.Fore.CYAN)
-    Visualisierung(list(EingabeFeld))
+    Visualisierung(list(EingabeFeld), 0)
 
     print(colorama.Fore.BLUE + '\nsortiertes Feld (Auswahl):' + colorama.Fore.CYAN)
     res1 = RufeAuf(AuswahlSort, list(EingabeFeld), 0)
@@ -228,7 +274,6 @@ while (Beenden == False):
     Ueberpruefen([res1, res2, res3, res4])
 
     print('\nStatistiken:\n')
-
     print(colorama.Fore.LIGHTGREEN_EX + colorama.Back.LIGHTBLACK_EX + "Das Sortieren von einem Feld mit " + str(len(res1)) + " Einträgen war erfolgreich." + colorama.Fore.GREEN + colorama.Back.RESET)
 
     GebeTabellenZeileAus("Algorithmus", Funktionen)
