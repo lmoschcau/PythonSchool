@@ -21,44 +21,19 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="colorama-0.3.9\colorama\ansi.py" />
-    <Compile Include="colorama-0.3.9\colorama\ansitowin32.py" />
-    <Compile Include="colorama-0.3.9\colorama\initialise.py" />
-    <Compile Include="colorama-0.3.9\colorama\win32.py" />
-    <Compile Include="colorama-0.3.9\colorama\winterm.py" />
-    <Compile Include="colorama-0.3.9\colorama\__init__.py" />
-    <Compile Include="colorama-0.3.9\demos\demo01.py" />
-    <Compile Include="colorama-0.3.9\demos\demo02.py" />
-    <Compile Include="colorama-0.3.9\demos\demo03.py" />
-    <Compile Include="colorama-0.3.9\demos\demo04.py" />
-    <Compile Include="colorama-0.3.9\demos\demo05.py" />
-    <Compile Include="colorama-0.3.9\demos\demo06.py" />
-    <Compile Include="colorama-0.3.9\demos\demo07.py" />
-    <Compile Include="colorama-0.3.9\demos\demo08.py" />
-    <Compile Include="colorama-0.3.9\demos\fixpath.py" />
-    <Compile Include="colorama-0.3.9\setup.py" />
+    <Compile Include="colorama\ansi.py" />
+    <Compile Include="colorama\ansitowin32.py" />
+    <Compile Include="colorama\initialise.py" />
+    <Compile Include="colorama\win32.py" />
+    <Compile Include="colorama\winterm.py" />
+    <Compile Include="colorama\__init__.py" />
     <Compile Include="Sorting.py" />
+    <Compile Include="Sort_7a.py" />
+    <Compile Include="Sort_7b.py" />
+    <Compile Include="Sort_7c.py" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="colorama-0.3.9\" />
-    <Folder Include="colorama-0.3.9\colorama.egg-info\" />
-    <Folder Include="colorama-0.3.9\colorama\" />
-    <Folder Include="colorama-0.3.9\demos\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="colorama-0.3.9\CHANGELOG.rst" />
-    <Content Include="colorama-0.3.9\colorama.egg-info\dependency_links.txt" />
-    <Content Include="colorama-0.3.9\colorama.egg-info\pbr.json" />
-    <Content Include="colorama-0.3.9\colorama.egg-info\PKG-INFO" />
-    <Content Include="colorama-0.3.9\colorama.egg-info\SOURCES.txt" />
-    <Content Include="colorama-0.3.9\colorama.egg-info\top_level.txt" />
-    <Content Include="colorama-0.3.9\demos\demo.bat" />
-    <Content Include="colorama-0.3.9\demos\demo.sh" />
-    <Content Include="colorama-0.3.9\LICENSE.txt" />
-    <Content Include="colorama-0.3.9\MANIFEST.in" />
-    <Content Include="colorama-0.3.9\PKG-INFO" />
-    <Content Include="colorama-0.3.9\README.rst" />
-    <Content Include="colorama-0.3.9\setup.cfg" />
+    <Folder Include="colorama\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

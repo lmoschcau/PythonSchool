@@ -2,19 +2,18 @@
 import sys
 import random
 import datetime
-
 #if not using colorama comment out the next two lines
 import colorama
 colorama.init()
 
 # Initialisierung von Variablen:
-AnzahlAufrufe = 0
-AnzahlSchreiben = 0
+AnzahlFeldLesen = 0
+AnzahlFeldSchreiben = 0
 
-SpaltenBreite = 16
+SpaltenBreite = 20
 
 Zeiten = [None] * 4
-Aufrufe = [None] * 4
+Lesen = [None] * 4
 Schreiben = [None] * 4
 Funktionen = [None] * 4
 
@@ -25,62 +24,62 @@ def vertausche( Feld, i, j ):
     return Feld
 
 def AuswahlSort( Feld ):
-    global AnzahlAufrufe
-    global AnzahlSchreiben
+    global AnzahlFeldLesen
+    global AnzahlFeldSchreiben
     for grenze in range(len(Feld)):
         kleinstes = grenze
         for i in range(grenze, len(Feld)):
-            AnzahlAufrufe += 1                                  #Zähler
+            AnzahlFeldLesen += 1                                  #Zähler
             if Feld[i] < Feld[kleinstes]:
                 kleinstes = i
-                AnzahlSchreiben += 1                                 #Zähler
         Feld = vertausche(Feld, grenze, kleinstes)
+        AnzahlFeldSchreiben += 2                                #Zähler
     return Feld
 
 def EinSort( Feld ):
     def FuegeEin( Feld, i ):
-        global AnzahlAufrufe
-        global AnzahlSchreiben
+        global AnzahlFeldLesen
+        global AnzahlFeldSchreiben
         Inhalt = Feld[i]
         while ( ( i > 0 ) & ( Feld[i - 1] > Inhalt ) ):
             Feld[i] = Feld[i - 1]
             i -= 1
-            AnzahlAufrufe += 1                                     #Zähler
+            AnzahlFeldLesen += 1                                     #Zähler
         Feld[i] = Inhalt
-        AnzahlSchreiben += 1                                      #Zähler
+        AnzahlFeldSchreiben += 1                                     #Zähler
         return Feld
     for grenze in range(1, len(Feld)):
         Feld = FuegeEin(Feld, grenze)
     return Feld
 
 def BubbleSort( Feld ):
-    global AnzahlAufrufe
-    global AnzahlSchreiben
+    global AnzahlFeldLesen
+    global AnzahlFeldSchreiben
     for grenze in range(len(Feld) - 1):
         for i in range(len(Feld) - 1, grenze, -1):
-            AnzahlAufrufe += 1                                  #Zähler
+            AnzahlFeldLesen += 1                                  #Zähler
             if ( Feld[i - 1] > Feld[i] ):
                 vertausche(Feld, i, i - 1)
-                AnzahlSchreiben += 1                                 #Zähler
+                AnzahlFeldSchreiben += 2                                 #Zähler
     return Feld
 
 def BubbleSort2( Feld ):
-    global AnzahlAufrufe
-    global AnzahlSchreiben
+    global AnzahlFeldLesen
+    global AnzahlFeldSchreiben
     grenze = 0
     while ( grenze < len(Feld) ):
         merke = len(Feld)
         for i in range(len(Feld) - 1, grenze, -1):
-            AnzahlAufrufe += 1                                  #Zähler
+            AnzahlFeldLesen += 1                                  #Zähler
             if ( Feld[i - 1] > Feld[i] ):
                 vertausche(Feld, i, i - 1)
                 merke = i
-                AnzahlSchreiben += 1                                 #Zähler
+                AnzahlFeldSchreiben += 2                                 #Zähler
         grenze = merke
     return Feld
 
 # Zufall + arrayLänge
-# InformationsAusgabe ( Zeit, #Aufrufe)
+# InformationsAusgabe ( Zeit, #Lesen)
 # 1 Datei Sort 7a, 7b, 7c
 
 #███ Universelle Funktionen:
@@ -109,6 +108,7 @@ def Auswahl( Auswaehlbar, Nachricht ):
 
 #███ Eingabe Zufälliges Feld Funktionen:
 # Ein Feld mit Zufälligen Zahlen zwischen min und max erstellen
+# ==> random.shuffle(range(100))
 def FuelleZufall( ArrayLaenge, ZufallMin, ZufallMax ):
     Feld = []
     for i in range(ArrayLaenge):
@@ -164,19 +164,19 @@ def GebeTabellenZeileAus( Name, Feld ):
 # Setzt die Werte für die Statistik in einem Feld auf die Werte des aktuellen
 # Algorithmus.
 def RufeAuf( Algorithmus, AufrufFeld, i ):
-    global AnzahlAufrufe
-    global AnzahlSchreiben
-    AnzahlAufrufe = 0
-    AnzahlSchreiben = 0
+    global AnzahlFeldLesen
+    global AnzahlFeldSchreiben
+    AnzahlFeldLesen = 0
+    AnzahlFeldSchreiben = 0
     StartZeit = datetime.datetime.now()
     sortiertesFeld = Algorithmus(AufrufFeld)
     Zeiten[i] = datetime.datetime.now() - StartZeit
-    Aufrufe[i] = AnzahlAufrufe
-    Schreiben[i] = AnzahlSchreiben
+    Lesen[i] = AnzahlFeldLesen
+    Schreiben[i] = AnzahlFeldSchreiben
     Funktionen[i] = Algorithmus.__name__
     print('\n')
     Visualisierung(sortiertesFeld)
-    print("AnzahlAufrufe: " + str(AnzahlAufrufe) + " AnzahlSchreiben: " + str(AnzahlSchreiben) + " Zeit: " + str(Zeiten[i]))
+    print("AnzahlFeldLesen: " + str(AnzahlFeldLesen) + " AnzahlFeldSchreiben: " + str(AnzahlFeldSchreiben) + " Zeit: " + str(Zeiten[i]))
     # weitergabe des sortierten Feldes für Weiterverarbeitung / Informationen
     return sortiertesFeld
 
@@ -184,8 +184,8 @@ def RufeAuf( Algorithmus, AufrufFeld, i ):
 # Schema: FeldFeld[Feld, Feld, Feld, Feld]
 def Ueberpruefen( FeldFeld ):
 
-    def HinzufuegenWennNichtLetztes(Text, Index, Laenge):
-        if (Index != Laenge - 1):
+    def HinzufuegenWennNichtLetztes( Text, Index, Laenge ):
+        if ( Index != Laenge - 1 ):
             return Text
         return ""
 
@@ -194,7 +194,7 @@ def Ueberpruefen( FeldFeld ):
     for i in range(len(FeldFeld[0])):
         gleich = True
         for j in range(0, len(FeldFeld)):
-            if (( FeldFeld[j][i] != FeldFeld[0][i] ) | (FeldFeld[j][max(i - 1, 0)] > FeldFeld[j][i])):
+            if ( ( FeldFeld[j][i] != FeldFeld[0][i] ) | ( FeldFeld[j][max(i - 1, 0)] > FeldFeld[j][i] ) ):
                 gleich = False
 
         if ( gleich == False ):
@@ -209,7 +209,7 @@ def Ueberpruefen( FeldFeld ):
     return FeldFehler
 
 #███ Aufruf ( Hauptprogramm ):
-while (Beenden == False):
+while ( Beenden == False ):
     print('\033[2J\033[1;1f', end='')
     EingabeFeld = InitialisierungFeld()
     Visualisierung = Auswahl({"v":VisualisierungVertikal, "h":VisualisierungHorizontal, "f":VisualisierungFeld}, "Visualisierung bitte auswählen: Vertikal[V] Horizontal[H] Feld[F]")
@@ -232,8 +232,8 @@ while (Beenden == False):
     print(colorama.Fore.LIGHTGREEN_EX + colorama.Back.LIGHTBLACK_EX + "Das Sortieren von einem Feld mit " + str(len(res1)) + " Einträgen war erfolgreich." + colorama.Fore.GREEN + colorama.Back.RESET)
 
     GebeTabellenZeileAus("Algorithmus", Funktionen)
-    GebeTabellenZeileAus("Aufrufe", Aufrufe)
-    GebeTabellenZeileAus("Schreiben", Schreiben)
+    GebeTabellenZeileAus("Anzahl Lesen", Lesen)
+    GebeTabellenZeileAus("Anzahl Schreiben", Schreiben)
     GebeTabellenZeileAus("Zeiten", Zeiten)
 
     Beenden = Auswahl({"j":True, "n":False, "t":True, "f":False, "1":True, "0":False}, "Wollen sie das Programm beenden? Ja[J] Nein[N]")
