@@ -50,28 +50,151 @@ def BubbleSort2( Feld ):
         grenze = merke
     return Feld
 
+def QuickSort( Feld):
+    return QuickSortFunktion(Feld, 0, len(Feld) - 1)
+def QuickSortFunktion( Feld, erstes, letztes ):
+ 
+    global AnzahlFeldLesen
+    global AnzahlFeldSchreiben
+    if ( erstes < letztes ):
+        mitte = ( erstes + letztes ) // 2
+        vergleichselement = Feld[mitte]
+        vonlinks = erstes
+        vonrechts = letztes
+        while ( vonlinks <= vonrechts ):
+            while ( Feld[vonlinks] < vergleichselement ):
+                vonlinks += 1
+                AnzahlFeldLesen += 1                                 #Zähler
+            while ( Feld[vonrechts] > vergleichselement ):
+                vonrechts -= 1
+                AnzahlFeldLesen += 1                                 #Zähler
+            if ( vonlinks <= vonrechts ):
+                vertausche(Feld, vonlinks, vonrechts)
+                AnzahlFeldSchreiben += 1                                 #Zähler
+                vonlinks += 1
+                vonrechts -= 1
+        Feld = QuickSortFunktion(Feld, erstes, vonrechts)
+        Feld = QuickSortFunktion(Feld, vonlinks, letztes)
+    return Feld
+
 # Zufall + arrayLänge
-# InformationsAusgabe ( Zeit, #Aufrufe)
+# InformationsAusgabe ( Zeit, #Lesen)
 # 1 Datei Sort 7a, 7b, 7c
 
-#███ Funktionen für Aufruf
+#███ Universelle Funktionen:
+# Eine universelle Funktion für die Eingabe eines Wertes eines bestimmten
+# Wertes.  Bei falscher Eingabe Erfolgt Eine Fehlermeldung
+def Eingabe( Nachricht, typ, Fehlermeldung ):
+    print(colorama.Fore.GREEN + Nachricht + colorama.Fore.CYAN)
+    Eingabe = None
+    while ( Eingabe == None ):
+        try:
+            Eingabe = typ(input(">"))
+        except ValueError:
+            print(colorama.Fore.RED + Fehlermeldung + colorama.Fore.CYAN)
+    return Eingabe
+# Universelle Funktion für die Eingabe eines Eintrags aus einer Auswahl.
+def Auswahl( Auswaehlbar, Nachricht ):
+    Ausgewaehlt = None
+    while ( Ausgewaehlt == None ):
+        NutzerEingabe = Eingabe(Nachricht, str, "Bitte einen Eintrag aus der auswahl angeben.")
+        NutzerEingabe = NutzerEingabe.lower()[:1]
+        try:
+            Ausgewaehlt = Auswaehlbar[NutzerEingabe]
+        except KeyError:
+            print("\033[2J\033[1;1f" + colorama.Fore.RED + "Fehler: Die Eingabe (" + str(NutzerEingabe) + ") ist keine gültige Auswahl!" + colorama.Style.RESET_ALL)
+    return Ausgewaehlt
+
+#███ Eingabe Zufälliges Feld Funktionen:
+# Ein Feld mit Zufälligen Zahlen zwischen min und max erstellen
+# ==> random.shuffle(range(100))
+def EingabeMinMax(Fehler):
+    ZufallMin = Eingabe("Bitte den niedrigsten Wert angeben:", int, Fehler)
+    ZufallMax = Eingabe("Bitte den höchsten Wert angeben:", int, Fehler)
+    return ZufallMin, ZufallMax
+
+def ZufallMinMax(Fehler):
+    ArrayLaenge = Eingabe("Bitte die Länge des Feldes angeben:", int, Fehler)
+    EingabeFeld = None
+    while ( EingabeFeld == None ):
+        ZufallMin, ZufallMax = EingabeMinMax(Fehler)
+        try:
+            EingabeFeld = FuelleZufall(ArrayLaenge, ZufallMin, ZufallMax)
+        except ValueError:
+            print("\033[2J\033[1;1f" + colorama.Fore.RED + "Fehler: niedrigster Wert (" + str(ZufallMin) + ") ist größer höchster Wert (" + str(ZufallMax) + ")!" + colorama.Style.RESET_ALL)
+    return EingabeFeld
+
+def MischenMinMax(Fehler):
+    ZufallMin, ZufallMax = EingabeMinMax(Fehler)
+    EingabeFeld = list(range(ZufallMin, ZufallMax + 1))
+    random.shuffle(EingabeFeld)
+    return EingabeFeld
+
+def AufsteigenMinMax(Fehler):
+    ZufallMin, ZufallMax = EingabeMinMax(Fehler)
+    return list(range(ZufallMin, ZufallMax + 1))
+
+def AbsteigenMinMax(Fehler):
+    ZufallMin, ZufallMax = EingabeMinMax(Fehler)
+    return list(range(ZufallMax, ZufallMin - 1, -1))
+
+def InitialisierungFeld( ):
+    ZufallModus = Auswahl({"z":ZufallMinMax, "m":MischenMinMax, "a":AufsteigenMinMax, "d":AbsteigenMinMax}, "Auf welche Weise soll das Feld befüllt werden?\n  zufällige Zahlen von Min bis Max[Z]\n  gemischtes Feld von Min bis Max[M]\n  aufsteigend von Min bis Max[A]\n  absteigend von Min bis Max[D]")
+    Fehler = "Bitte Geben Sie eine ganze natürliche Zahl an."
+    return ZufallModus(Fehler)
+#███ Funktionen für Aufruf und Überprüfung
 # Funktion für das aufrufen von einem Sortieralgorithmus.
-def RufeAuf( Algorithmus, AufrufFeld):
+# Setzt die Werte für die Statistik in einem Feld auf die Werte des aktuellen
+# Algorithmus.
+def RufeAuf( Algorithmus, AufrufFeld, i ):
     sortiertesFeld = Algorithmus(AufrufFeld)
+    print('\n')
     print(sortiertesFeld)
     return sortiertesFeld
 
+# Funktion für das Überprüfen der Richtigkeit der Felder inerhalb eines Feldes
+# Schema: FeldFeld[Feld, Feld, Feld, Feld]
+def Ueberpruefen( FeldFeld ):
+
+    def HinzufuegenWennNichtLetztes( Text, Index, Laenge ):
+        if ( Index != Laenge - 1 ):
+            return Text
+        return ""
+
+    FeldFehler = False
+    AusgabeString = colorama.Fore.BLUE + "["
+    for i in range(len(FeldFeld[0])):
+        gleich = True
+        for j in range(0, len(FeldFeld)):
+            if ( ( FeldFeld[j][i] != FeldFeld[0][i] ) | ( FeldFeld[j][max(i - 1, 0)] > FeldFeld[j][i] ) ):
+                gleich = False
+
+        if ( gleich == False ):
+            FeldFehler = True
+            for j in range(0, len(FeldFeld)):
+                AusgabeString += colorama.Fore.RED + str(FeldFeld[j][i]) + HinzufuegenWennNichtLetztes("/ ", j, len(FeldFeld))
+            AusgabeString += colorama.Fore.BLUE + HinzufuegenWennNichtLetztes(", ", i, len(FeldFeld[0]))
+        else:
+            AusgabeString += colorama.Fore.GREEN + str(FeldFeld[0][i]) + colorama.Fore.BLUE + HinzufuegenWennNichtLetztes(", ", i, len(FeldFeld[0]))
+    AusgabeString += colorama.Fore.BLUE + "]"
+    print(AusgabeString)
+    return FeldFehler
+
 #███ Aufruf ( Hauptprogramm ):
 print('\033[2J\033[1;1f', end='')
-EingabeFeld = [10,8,6,9,3,5,2,1]
+EingabeFeld = InitialisierungFeld()
 print(colorama.Fore.BLUE + '\033[2J\033[1;1funsortiertes Feld:' + colorama.Fore.CYAN)
 print(EingabeFeld)
 
 print(colorama.Fore.BLUE + '\nsortiertes Feld (Auswahl):' + colorama.Fore.CYAN)
-RufeAuf(AuswahlSort, list(EingabeFeld))
+res1 = RufeAuf(AuswahlSort, list(EingabeFeld), 0)
 print(colorama.Fore.BLUE + '\nsortiertes Feld (Einfügen):' + colorama.Fore.CYAN)
-RufeAuf(EinSort, list(EingabeFeld))
+res2 = RufeAuf(EinSort, list(EingabeFeld), 1)
 print(colorama.Fore.BLUE + '\nsortiertes Feld (Bubble-Sort):' + colorama.Fore.CYAN)
-RufeAuf(BubbleSort, list(EingabeFeld))
+res3 = RufeAuf(BubbleSort, list(EingabeFeld), 2)
 print(colorama.Fore.BLUE + '\nsortiertes Feld (Bubble+):' + colorama.Fore.CYAN)
-RufeAuf(BubbleSort2, list(EingabeFeld))
+res4 = RufeAuf(BubbleSort2, list(EingabeFeld), 3)
+print(colorama.Fore.BLUE + '\nsortiertes Feld (Quick):' + colorama.Fore.CYAN)
+res5 = RufeAuf(QuickSort, list(EingabeFeld), 4)
+                                                                                                                                            
+Ueberpruefen([res1, res2, res3, res4, res5])

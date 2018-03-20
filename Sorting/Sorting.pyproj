@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>528e1a5f-1026-460b-a024-6947046410ef</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Sorting.py</StartupFile>
+    <StartupFile>Sort_7c.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>

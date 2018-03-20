@@ -12,10 +12,10 @@ AnzahlFeldSchreiben = 0
 
 SpaltenBreite = 20
 
-Zeiten = [None] * 4
-Lesen = [None] * 4
-Schreiben = [None] * 4
-Funktionen = [None] * 4
+Zeiten = [None] * 5
+Lesen = [None] * 5
+Schreiben = [None] * 5
+Funktionen = [None] * 5
 
 Beenden = False
 # Sortier-Algorithmen:
@@ -78,6 +78,33 @@ def BubbleSort2( Feld ):
         grenze = merke
     return Feld
 
+def QuickSort( Feld):
+    return QuickSortFunktion(Feld, 0, len(Feld) - 1)
+def QuickSortFunktion( Feld, erstes, letztes ):
+ 
+    global AnzahlFeldLesen
+    global AnzahlFeldSchreiben
+    if ( erstes < letztes ):
+        mitte = ( erstes + letztes ) // 2
+        vergleichselement = Feld[mitte]
+        vonlinks = erstes
+        vonrechts = letztes
+        while ( vonlinks <= vonrechts ):
+            while ( Feld[vonlinks] < vergleichselement ):
+                vonlinks += 1
+                AnzahlFeldLesen += 1                                 #Zähler
+            while ( Feld[vonrechts] > vergleichselement ):
+                vonrechts -= 1
+                AnzahlFeldLesen += 1                                 #Zähler
+            if ( vonlinks <= vonrechts ):
+                vertausche(Feld, vonlinks, vonrechts)
+                AnzahlFeldSchreiben += 1                                 #Zähler
+                vonlinks += 1
+                vonrechts -= 1
+        Feld = QuickSortFunktion(Feld, erstes, vonrechts)
+        Feld = QuickSortFunktion(Feld, vonlinks, letztes)
+    return Feld
+
 # Zufall + arrayLänge
 # InformationsAusgabe ( Zeit, #Lesen)
 # 1 Datei Sort 7a, 7b, 7c
@@ -116,19 +143,40 @@ def FuelleZufall( ArrayLaenge, ZufallMin, ZufallMax ):
     return Feld
 # Funktion für die Eingabe der Werte eines Zufälligen Feldes.
 # Eingabe von: Anzahl der Einträge, niedrigster und höchster Wert.
-def InitialisierungFeld( ):
-    Fehler = "Bitte Geben Sie eine ganze natürliche Zahl an."
-    EingabeFeld = None
+def EingabeMinMax(Fehler):
+    ZufallMin = Eingabe("Bitte den niedrigsten Wert angeben:", int, Fehler)
+    ZufallMax = Eingabe("Bitte den höchsten Wert angeben:", int, Fehler)
+    return ZufallMin, ZufallMax
 
+def ZufallMinMax(Fehler):
     ArrayLaenge = Eingabe("Bitte die Länge des Feldes angeben:", int, Fehler)
+    EingabeFeld = None
     while ( EingabeFeld == None ):
-        ZufallMin = Eingabe("Bitte den niedrigsten Wert angeben:", int, Fehler)
-        ZufallMax = Eingabe("Bitte den höchsten Wert angeben:", int, Fehler)
+        ZufallMin, ZufallMax = EingabeMinMax(Fehler)
         try:
             EingabeFeld = FuelleZufall(ArrayLaenge, ZufallMin, ZufallMax)
         except ValueError:
             print("\033[2J\033[1;1f" + colorama.Fore.RED + "Fehler: niedrigster Wert (" + str(ZufallMin) + ") ist größer höchster Wert (" + str(ZufallMax) + ")!" + colorama.Style.RESET_ALL)
     return EingabeFeld
+
+def MischenMinMax(Fehler):
+    ZufallMin, ZufallMax = EingabeMinMax(Fehler)
+    EingabeFeld = list(range(ZufallMin, ZufallMax + 1))
+    random.shuffle(EingabeFeld)
+    return EingabeFeld
+
+def AufsteigenMinMax(Fehler):
+    ZufallMin, ZufallMax = EingabeMinMax(Fehler)
+    return list(range(ZufallMin, ZufallMax + 1))
+
+def AbsteigenMinMax(Fehler):
+    ZufallMin, ZufallMax = EingabeMinMax(Fehler)
+    return list(range(ZufallMax, ZufallMin - 1, -1))
+
+def InitialisierungFeld( ):
+    ZufallModus = Auswahl({"z":ZufallMinMax, "m":MischenMinMax, "a":AufsteigenMinMax, "d":AbsteigenMinMax}, "Auf welche Weise soll das Feld befüllt werden?\n  zufällige Zahlen von Min bis Max[Z]\n  gemischtes Feld von Min bis Max[M]\n  aufsteigend von Min bis Max[A]\n  absteigend von Min bis Max[D]")
+    Fehler = "Bitte Geben Sie eine ganze natürliche Zahl an."
+    return ZufallModus(Fehler)
 #███ Funktionen für die Visualisierung von Feldern.
 # Wenn eine weitere Funktionen ergänzt wird muss sie bei der Eingabe der
 # visualisierung ergänzt werden.
@@ -148,7 +196,7 @@ def VisualisierungHorizontal( Feld ):
         print(horizontal)
 
 def VisualisierungFeld( Feld ):
-    print(colorama.Fore.BLUE + str(EingabeFeld) + colorama.Style.RESET_ALL)
+    print(colorama.Fore.BLUE + str(Feld) + colorama.Style.RESET_ALL)
     
 #███ Ausgabe
 # Funktion für die Ausgabe einer Zeile einer Tabelle
@@ -224,8 +272,10 @@ while ( Beenden == False ):
     res3 = RufeAuf(BubbleSort, list(EingabeFeld), 2)
     print(colorama.Fore.BLUE + '\nsortiertes Feld (Bubble+):' + colorama.Fore.CYAN)
     res4 = RufeAuf(BubbleSort2, list(EingabeFeld), 3)
+    print(colorama.Fore.BLUE + '\nsortiertes Feld (Quick):' + colorama.Fore.CYAN)
+    res5 = RufeAuf(QuickSort, list(EingabeFeld), 4)
                                                                                                                                             
-    Ueberpruefen([res1, res2, res3, res4])
+    Ueberpruefen([res1, res2, res3, res4, res5])
 
     print('\nStatistiken:\n')
 
