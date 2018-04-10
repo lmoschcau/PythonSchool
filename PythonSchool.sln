@@ -7,6 +7,10 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Sorting", "Sorting\Sorting.
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Sorting_backup", "Sorting_backup\Sorting_backup.pyproj", "{82526F56-BC5D-40B5-B094-E318C009CD1B}"
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "NewtonIteration", "NewtonIteration\NewtonIteration.pyproj", "{9DA89069-487A-4B57-807A-61247EACC752}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "hvh", "hvh\hvh.pyproj", "{D4F1F29D-2B4C-42C8-AAD4-F480D667443E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +21,10 @@ Global
 		{528E1A5F-1026-460B-A024-6947046410EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82526F56-BC5D-40B5-B094-E318C009CD1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{82526F56-BC5D-40B5-B094-E318C009CD1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DA89069-487A-4B57-807A-61247EACC752}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DA89069-487A-4B57-807A-61247EACC752}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4F1F29D-2B4C-42C8-AAD4-F480D667443E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4F1F29D-2B4C-42C8-AAD4-F480D667443E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
