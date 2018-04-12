@@ -4,8 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>d4f1f29d-2b4c-42c8-aad4-f480d667443e</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>
-    </StartupFile>
+    <StartupFile>testing_module.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -22,6 +21,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="testing_module.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="util\io.py" />
     <Compile Include="util\search.py" />
     <Compile Include="util\sort.py" />
