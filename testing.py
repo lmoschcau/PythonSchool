@@ -1,6 +1,8 @@
-import hvh.util.io as io
+import hvh.util.search as searchq
 
-Tabelle1 = io.Table(4)
-print(Tabelle1.Spalten)
-print(Tabelle1.Zellen)
+tfeld = [1,2,4,5,8]
+tkey = input('Zahl: ')
+
+print(searchq.sequ(tfeld, tkey))
+
 input("exit")
