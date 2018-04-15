@@ -47,16 +47,17 @@ class Table:
     def __init__(self, Spalten=[]):
 
         self.Zellen = [Spalten] if Spalten != [] else []
-        self.VertikalRandStiel = "0:D;1:D;"
-        self.HorizontalRandStiel = "0:D;1:D;"
-
+        self.RandStielVertikal = {0:"D", 1:"D"}
+        self.RandStielHorizontal = {0:"D", 1:"D"}
         self.Form = {"NSNS":"─", "SNSN":"│", "NSSN":"┌", "NNSS":"┐", "SSNN":"└", "SNNS":"┘", "SSSN":"├", "SNSS":"┤", "NSSS":"┬", "SSNS":"┴", "SSSS":"┼",
                      "NDND":"═", "DNDN":"║",
                      "NDSN":"╒", "NSDN":"╓", "NDDN":"╔", "NNSD":"╕", "NNDS":"╖", "NNDD":"╗",
                      "SDNN":"╘", "DSNN":"╙", "DDNN":"╚", "SNND":"╛", "DNNS":"╜", "DNND":"╝",
                      "SDSN":"╞", "DSDN":"╟", "DDDN":"╠", "SNSD":"╡", "DNDS":"╢", "DNDD":"╣",
                      "NDSD":"╤", "NSDS":"╥", "NDDD":"╦", "SDND":"╧", "DSNS":"╨", "DDND":"╩",
-                     "SDSD":"╪", "DSDS":"╫", "DDDD":"╬"}
+                     "SDSD":"╪", "DSDS":"╫", "DDDD":"╬",
+                     "NNNN":" ",
+                     "SNNN":"│", "NNSN":"│", "DNNN":"║", "NNDN":"║", "NSNN":"─", "NNNS":"─", "NDNN":"═", "NNND":"═"}
         #─│┌┐└┘├┤┬┴┼ ═║╒╓╔╕╖╗╘╙╚╛╜╝╞╟╠╡╢╣╤╥╦╧╨╩╪╫╬
 
     def ZeileHinzufügen(self, Zeile):
@@ -64,15 +65,7 @@ class Table:
 
     def DefiniereForm(self, Form):
         self.Form = Form
-
-    def Get_VertikalRandStiel(self):
-        return self.VertikalRandStiel
-
-    def Set_VertikalRandStiel(self, value):
-        self.VertikalRandStiel = value
-
-    VertikalRandStiel = property(Get_VertikalRandStiel, SSet_VertikalRandStiel)
-
+        
     def BerechneTabellenGroeße(self):
         Breite = 0
         Hoehe = len(self.Zellen)
@@ -81,35 +74,72 @@ class Table:
         return (Breite, Hoehe)
 
     def BerechneZellenLaenge(self, Rand):
-
         TabellenGroeße = self.BerechneTabellenGroeße()
-
         SpaltenLaenge = [0] * TabellenGroeße[0]
-
         for y in range(TabellenGroeße[1]):
             for x, Zelle in enumerate(self.Zellen[y]):
-                if x <= len(self.Zellen):
-                    if len(self.Zellen[y][x]) > SpaltenLaenge[x]: SpaltenLaenge[x] = len(self.Zellen[x][y])
+                if x <= len(self.Zellen[y]):
+                    if len(self.Zellen[y][x]) > SpaltenLaenge[x]: SpaltenLaenge[x] = len(self.Zellen[y][x])
+        return [(elem + 2 * Rand) for elem in SpaltenLaenge]
 
-        return {"Spalten":[(elem + 2 * Rand) for elem in SpaltenLaenge]}
+    def FuelleStiel(self, Stiel, Laenge):
+        return [(Stiel[i] if i in Stiel else "S") for i in range(Laenge)]
 
-    def GebeTabelleAus(Außenrand="D", ErsteSpalteTrenner="D", ErsteZeileTrenner="D", SpalteTrenner="S", ZeileTrenner="S"):
-        pass
+    def BerechneRandFeld(self, Groeße):
+        RStielH = self.FuelleStiel(self.RandStielHorizontal, Groeße[1] + 1)
+        RStielV = self.FuelleStiel(self.RandStielVertikal, Groeße[0] + 1)
+        Feld = [[(self.Form[
+                            (RStielV[x//2] if x % 2 == 0 and y > 0 else "N") + # 
+                            (RStielH[y//2] if y % 2 == 0 and x < Groeße[0] * 2 else "N") + # 
+                            (RStielV[x//2] if x % 2 == 0 and y < Groeße[1] * 2 else "N") + # 
+                            (RStielH[y//2] if y % 2 == 0 and x > 0 else "N")   # 
+                        ]) for x in range(Groeße[0] * 2 + 1)] for y in range(Groeße[1] * 2 + 1)]
+        return Feld
+
+    def GibTabelleAus(self, Rand, flush=False, RandPrefix="", InhaltPrefix=""):
+        TabellenGroeße = self.BerechneTabellenGroeße()
+        SpaltenLaenge = self.BerechneZellenLaenge(Rand)
+        RandFeld = self.BerechneRandFeld(TabellenGroeße)
+
+        def GibRandAus(Zeile):
+            Rueckgabe = RandPrefix
+            for i in range(TabellenGroeße[0]):
+                Rueckgabe += RandFeld[Zeile * 2][i * 2]
+                Rueckgabe += RandFeld[Zeile * 2][i * 2 + 1] * SpaltenLaenge[i]
+            Rueckgabe += RandFeld[Zeile * 2][-1]
+            return Rueckgabe
+
+        def GibTextAus(Zeile):
+            Rueckgabe = ""
+            for i in range(TabellenGroeße[0]):
+                Rueckgabe += RandPrefix + RandFeld[Zeile * 2 + 1][i * 2]
+                Rueckgabe += InhaltPrefix + (Rand * " " + (self.Zellen[Zeile][i] if i < len(self.Zellen[Zeile]) else "") + (" " * 100))[:SpaltenLaenge[i]]
+            Rueckgabe += RandPrefix + RandFeld[Zeile * 2 + 1][-1]
+            return Rueckgabe
+
+        Ergebniss = ""
+
+        for y in range(TabellenGroeße[1]):
+            Ergebniss += GibRandAus(y) + "\n"
+            Ergebniss += GibTextAus(y) + "\n"
+        Ergebniss += GibRandAus(TabellenGroeße[1])
+
+        print(Ergebniss, flush=flush)
 
 
-# ╔═════════╦═════════╤═════════╗ ===>X
+# ╔═════════╦═════════╤═════════╗ ===>X     ═
 # ║         ║         │         ║
-# ╠═════════╬═════════╪═════════╣
+# ╠═════════╬═════════╪═════════╣           ═
 # ║         ║         │         ║
-# ╟─────────╫─────────┼─────────╢
+# ╟─────────╫─────────┼─────────╢           ─
 # ║         ║         │         ║
-# ╟─────────╫─────────┼─────────╢
+# ╟─────────╫─────────┼─────────╢           ─
 # ║         ║         │         ║
-# ╟─────────╫─────────┼─────────╢
+# ╟─────────╫─────────┼─────────╢           ─
 # ║         ║         │         ║
-# ╟─────────╫─────────┼─────────╢
+# ╟─────────╫─────────┼─────────╢           ─
 # ║         ║         │         ║
-# ╚═════════╩═════════╧═════════╝
-# ║
+# ╚═════════╩═════════╧═════════╝           ─
+# ║                                         ^ BorderVertikalStyle
 # ║
 # \/
