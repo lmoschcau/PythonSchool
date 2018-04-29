@@ -2,15 +2,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>d4f1f29d-2b4c-42c8-aad4-f480d667443e</ProjectGuid>
+    <ProjectGuid>0e13f515-813a-474e-b95a-49d3ba0cea8a</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>testing_module.py</StartupFile>
+    <StartupFile>BackTracking.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
-    <Name>hvh</Name>
-    <RootNamespace>hvh</RootNamespace>
+    <Name>BackTracking</Name>
+    <RootNamespace>BackTracking</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,25 +21,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="testing_module.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="util\backtrack.py" />
-    <Compile Include="util\io.py" />
-    <Compile Include="util\search.py" />
-    <Compile Include="util\sort.py" />
-    <Compile Include="util\__init__.py" />
-    <Compile Include="__init__.py" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="util\" />
-    <Folder Include="util\__pycache__\" />
-    <Folder Include="__pycache__\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="util\__pycache__\io.cpython-36.pyc" />
-    <Content Include="util\__pycache__\__init__.cpython-36.pyc" />
-    <Content Include="__pycache__\__init__.cpython-36.pyc" />
+    <Compile Include="BackTracking.py" />
+    <Compile Include="BackTracking_backup.py" />
+    <Compile Include="BackTracking_debug.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

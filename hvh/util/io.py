@@ -1,4 +1,9 @@
 # coding=utf-8
+from msvcrt import getch
+import colorama
+
+colorama.init()
+# Input
 def Eingabe( Nachricht, typ, Fehlermeldung ):
     print(colorama.Fore.GREEN + Nachricht + colorama.Fore.CYAN)
     Eingabe = None
@@ -21,6 +26,38 @@ def Auswahl( Auswaehlbar, Nachricht ):
             print("\033[2J\033[1;1f" + colorama.Fore.RED + "Fehler: Die Eingabe (" + str(NutzerEingabe) + ") ist keine gültige Auswahl!" + colorama.Style.RESET_ALL)
     return Ausgewaehlt
 
+def AuswahlHorizontal( Auswaehlbar, Nachricht, pos=[1, 1], clear=True ):
+    """Auswahl aus einer Liste (mit Pfeiltasten)
+    
+    Auswählbar: List/Array/Tuple
+    Nachricht:  String"""
+    if (clear): print("\033[2J", end="")
+    print(colorama.Fore.GREEN + Nachricht + colorama.Style.RESET_ALL)
+    Laenge = len(Auswaehlbar)
+    Position = 0
+    Ausgewaehlt = None
+    while ( Ausgewaehlt == None ):
+        Ausgabe = '\033[' + str(pos[0] + 1) + ';' + str(pos[1]) + 'f'
+        for i in range(Laenge):
+            if (i == Position):
+                Ausgabe += colorama.Back.WHITE + colorama.Fore.BLACK + Auswaehlbar[i] + colorama.Style.RESET_ALL + " "
+            else:
+                Ausgabe += Auswaehlbar[i] + " "
+        print(Ausgabe)
+        key = ord(getch())
+        if (key == 224):
+            key = ord(getch())
+            if (key == 75):
+                Position -= 1
+            if (key == 77):
+                Position += 1
+        Position = (Position + Laenge) % Laenge
+        if (key == 13):
+            Ausgewaehlt = Auswaehlbar[Position]
+    return Ausgewaehlt
+
+
+# Output
 def VisualisierungVertikal( Feld ):
     """Work in progress. Use with caution!"""
     for i in range(max(Feld), min(Feld) - 1, -1):
@@ -44,8 +81,13 @@ def VisualisierungFeld( Feld ):
 
 class Table:
     """Eine einfache Tabelle"""
+
+    def ZellenZuString(self, Zeile):
+        return [str(Zelle) for Zelle in Zeile]
+
     def __init__(self, Spalten=[]):
 
+        Spalten = self.ZellenZuString(Spalten)
         self.Zellen = [Spalten] if Spalten != [] else []
         self.RandStielVertikal = {0:"D", 1:"D"}
         self.RandStielHorizontal = {0:"D", 1:"D"}
@@ -61,6 +103,7 @@ class Table:
         #─│┌┐└┘├┤┬┴┼ ═║╒╓╔╕╖╗╘╙╚╛╜╝╞╟╠╡╢╣╤╥╦╧╨╩╪╫╬
 
     def ZeileHinzufügen(self, Zeile):
+        Zeile = self.ZellenZuString(Zeile)
         self.Zellen.append(Zeile)
 
     def DefiniereForm(self, Form):
@@ -143,3 +186,10 @@ class Table:
 # ║                                         ^ BorderVertikalStyle
 # ║
 # \/
+
+# ▀▄█▌▐░▒▓■□▬ ▌▐
+
+def progressHorizontal(value, width, pos, text="", flush=False, ProgressPrefix="", TextPrefix=""):
+    print('\033[' + str(pos[0]) + ';' + str(pos[1]) + 'f' + ProgressPrefix + (int( value) * "█") + (int(width - value) * "░") + TextPrefix + " " + text)
+
+

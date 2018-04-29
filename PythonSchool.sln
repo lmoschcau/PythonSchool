@@ -11,6 +11,8 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "NewtonIteration", "NewtonIt
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "hvh", "hvh\hvh.pyproj", "{D4F1F29D-2B4C-42C8-AAD4-F480D667443E}"
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "BackTracking", "BackTracking\BackTracking.pyproj", "{0E13F515-813A-474E-B95A-49D3BA0CEA8A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,8 @@ Global
 		{9DA89069-487A-4B57-807A-61247EACC752}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4F1F29D-2B4C-42C8-AAD4-F480D667443E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D4F1F29D-2B4C-42C8-AAD4-F480D667443E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E13F515-813A-474E-B95A-49D3BA0CEA8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E13F515-813A-474E-B95A-49D3BA0CEA8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
