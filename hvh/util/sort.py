@@ -42,7 +42,7 @@ def BubbleSortOpt( Feld ):
         grenze = merke
     return Feld
 
-def QuickSort( Feld):
+def QuickSort( Feld ):
     return QuickSortFunktion(Feld, 0, len(Feld) - 1)
 def QuickSortFunktion( Feld, erstes, letztes ):
     if ( erstes < letztes ):
