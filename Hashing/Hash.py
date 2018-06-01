@@ -82,3 +82,9 @@ class HashTabelle:
                     break
         return freie < 2
 
+Tabelle = HashTabelle(20, 3, "ftz")
+
+Tabelle.fuegeein("Nundhjtjtktktkah")
+Tabelle.fuegeein("Nundhjtjtktkrj")
+Tabelle.fuegeein("Fjj")
+print Tabelle.Tabelle
