@@ -16,12 +16,13 @@ class Datei:
         try:
             self.Personen = pickle.load(open(filename, "rb")).Personen
         except IOError:
+            self.Personen = []
             print "Dateifehler"
 
     def close( self ):
         pickle.dump(self, open(self.getFilename, "w+"))
 
-    def person_anmelden(self):
+    def person_anmelden( self ):
         Person = Persontyp()
         self.Personen.append(Person)
 
@@ -151,3 +152,4 @@ while Antwort != 9:
         Anmeldedatei.teilnehmerliste_ausgeben(TEILNEHMERDATEINAME)
         weiter()
         
+Anmeldedatei.close()
