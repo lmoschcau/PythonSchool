@@ -13,6 +13,12 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "hvh", "hvh\hvh.pyproj", "{D
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "BackTracking", "BackTracking\BackTracking.pyproj", "{0E13F515-813A-474E-B95A-49D3BA0CEA8A}"
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "FileIO", "FileIO\FileIO.pyproj", "{59884FA9-6E7A-4DDC-8B7E-B06D065B699B}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Hashing", "Hashing\Hashing.pyproj", "{0B9931C2-DBEC-4360-B867-4D49EB6712F1}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Lists", "Lists\Lists.pyproj", "{7822F7F7-5A72-4089-8465-3DC8461A607A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +35,12 @@ Global
 		{D4F1F29D-2B4C-42C8-AAD4-F480D667443E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E13F515-813A-474E-B95A-49D3BA0CEA8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0E13F515-813A-474E-B95A-49D3BA0CEA8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59884FA9-6E7A-4DDC-8B7E-B06D065B699B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59884FA9-6E7A-4DDC-8B7E-B06D065B699B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B9931C2-DBEC-4360-B867-4D49EB6712F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B9931C2-DBEC-4360-B867-4D49EB6712F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7822F7F7-5A72-4089-8465-3DC8461A607A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7822F7F7-5A72-4089-8465-3DC8461A607A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
