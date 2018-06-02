@@ -1,4 +1,4 @@
-![license](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)](https://github.com/MoschcauL/PythonSchool/blob/master/LICENSE)
 
 PythonSchool
 ===
