@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{7822f7f7-5a72-4089-8465-3dc8461a607a}</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>1.py</StartupFile>
+    <StartupFile>skidfk.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,7 +21,13 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="a.py" />
+    <Compile Include="importdy.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="dynalist.py" />
+    <Compile Include="skidfk.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
