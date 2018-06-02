@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>d4f1f29d-2b4c-42c8-aad4-f480d667443e</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>testing_module.py</StartupFile>
+    <StartupFile>util\dynalist.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -25,6 +25,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="util\backtrack.py" />
+    <Compile Include="util\basic.py" />
+    <Compile Include="util\dynalist.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="util\fileio.py" />
+    <Compile Include="util\hash.py" />
     <Compile Include="util\io.py" />
     <Compile Include="util\search.py" />
     <Compile Include="util\sort.py" />
